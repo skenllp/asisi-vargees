@@ -947,9 +947,10 @@
   }
 
   /* ---------------------------------------------------------
-     Blessing Form -> WhatsApp Redirect (+44 7884 948199)
+     Blessing Form -> Google Apps Script Submission
      --------------------------------------------------------- */
   var blessingForm = document.getElementById('blessingForm');
+  var blessingSuccess = document.getElementById('blessingSuccess');
   if (blessingForm) {
     blessingForm.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -982,34 +983,52 @@
 
       if (!valid) return;
 
-      /* Append new blessing card to wishes wall */
-      var wall = document.getElementById('wishesWall');
-      if (wall) {
-        var card = document.createElement('article');
-        card.className = 'wish-card';
-        card.innerHTML =
-          '<p class="wish-card__meta">' + escapeHtml(nameVal.toUpperCase()) + '</p>' +
-          '<p class="wish-card__quote">“' + escapeHtml(textVal) + '”</p>';
-        wall.insertBefore(card, wall.firstChild);
+      var data = {
+        name: nameVal,
+        side: 'Blessing',
+        attending: 'Blessing',
+        guests: '0',
+        wish: textVal,
+        timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+      };
+
+      /* Submit to Google Apps Script if URL set */
+      if (SCRIPT_URL && SCRIPT_URL !== 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
+        var iframeName = 'blessingSink_' + Date.now();
+        var iframe = document.createElement('iframe');
+        iframe.name = iframeName;
+        iframe.style.cssText = 'display:none;position:absolute;width:0;height:0;border:0;';
+        document.body.appendChild(iframe);
+
+        var hiddenForm = document.createElement('form');
+        hiddenForm.method = 'POST';
+        hiddenForm.action = SCRIPT_URL;
+        hiddenForm.target = iframeName;
+        hiddenForm.style.cssText = 'display:none;';
+
+        Object.keys(data).forEach(function (k) {
+          var input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = k;
+          input.value = data[k];
+          hiddenForm.appendChild(input);
+        });
+
+        document.body.appendChild(hiddenForm);
+        hiddenForm.submit();
+        setTimeout(function () {
+          try { document.body.removeChild(hiddenForm); } catch (ignore) { }
+          try { document.body.removeChild(iframe); } catch (ignore) { }
+        }, 2000);
       }
 
-      /* Format WhatsApp message & redirect to +44 7884 948199 */
-      var phone = '447884948199';
-      var message = '✨ *Wedding Blessing for Ashik & Irine*\n\n' +
-        '*From:* ' + nameVal + '\n\n' +
-        textVal;
-      var waUrl = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(message);
-
-      /* Trigger seamless redirection */
-      var link = document.createElement('a');
-      link.href = waUrl;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      document.body.appendChild(link);
-      link.click();
-      setTimeout(function () {
-        try { document.body.removeChild(link); } catch (e) { }
-      }, 100);
+      /* Show success confirmation box */
+      blessingForm.style.display = 'none';
+      blessingForm.hidden = true;
+      if (blessingSuccess) {
+        blessingSuccess.hidden = false;
+        blessingSuccess.style.display = 'flex';
+      }
     });
   }
 
