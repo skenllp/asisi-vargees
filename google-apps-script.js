@@ -19,7 +19,7 @@
  * 10. Click "Authorize access", select your Google account, click "Advanced" -> "Go to Untitled project (unsafe)" -> "Allow".
  * 11. Copy the generated "Web app URL" (looks like: https://script.google.com/macros/s/AKfycb.../exec).
  * 12. Paste the Web App URL into `js/main.js` in the `SCRIPT_URL` variable:
- *     var SCRIPT_URL = 'YOUR_WEB_APP_URL_HERE';
+ *     var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwF_rH8Brdu9WZ4frjkehRgXYxXO0D0mb6VGw-w-lMOVfckjz-0PZ4hi8nlxdYSvg/exec';
  * ============================================================================
  */
 

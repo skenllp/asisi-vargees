@@ -39,7 +39,7 @@ This website includes a complete RSVP form that submits guest responses directly
    - Copy the generated **Web App URL** (starts with `https://script.google.com/macros/s/.../exec`).
    - Open [`js/main.js`](./js/main.js) and replace `SCRIPT_URL` at line 751:
      ```javascript
-     var SCRIPT_URL = 'YOUR_GENERATED_WEB_APP_URL_HERE';
+     var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwF_rH8Brdu9WZ4frjkehRgXYxXO0D0mb6VGw-w-lMOVfckjz-0PZ4hi8nlxdYSvg/exec';
      ```
 
 ---
