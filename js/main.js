@@ -633,9 +633,9 @@
      8 · Countdown — Engagement: 26 Dec 2026, Wedding: 31 Dec 2026
      --------------------------------------------------------- */
   (function countdown() {
-    /* Engagement: Sat 26 Dec 2026 at 11:30 AM IST, Wedding: Thu 31 Dec 2026 at 11:00 AM IST */
+    /* Engagement: Sat 26 Dec 2026 at 11:30 AM IST, Wedding: Thu 31 Dec 2026 at 9:59 AM IST */
     var engagementTarget = new Date('2026-12-26T11:30:00+05:30').getTime();
-    var weddingTarget = new Date('2026-12-31T11:00:00+05:30').getTime();
+    var weddingTarget = new Date('2026-12-31T09:59:00+05:30').getTime();
     var target = Date.now() < engagementTarget ? engagementTarget : weddingTarget;
 
     var d = document.getElementById('cdD'),
